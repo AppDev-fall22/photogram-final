@@ -13,6 +13,8 @@ class PhotosController < ApplicationController
     matching_photos = Photo.where({ :id => the_id })
 
     @the_photo = matching_photos.at(0)
+    fan_list = Like.where(:photo_id => the_id).map_relation_to_array(:fan_id)
+    @fan_names = User.where({ :id => fan_list}).map_relation_to_array(:username)
 
     render({ :template => "photos/show.html.erb" })
   end

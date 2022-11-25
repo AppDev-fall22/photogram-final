@@ -9,6 +9,6 @@
 #  photo_id   :integer
 #
 class Like < ApplicationRecord
-  belongs_to :user, :required => true
+  belongs_to :fan, :class_name => "User", :foreign_key => "fan_id"
   belongs_to :photo, :required => true
 end

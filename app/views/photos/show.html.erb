@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      Photo #<%= @the_photo.id %> details
+      Photo details
     </h1>
 
     <div>
@@ -20,12 +20,35 @@
 
     <dl>
       <dt>
+        Image
+      </dt>
+      <dd>
+        <img src="<%=@the_photo.image%>"></img>
+      </dd>
+      <dt>
         Caption
       </dt>
       <dd>
         <%= @the_photo.caption %>
       </dd>
-
+      <dt> 
+        Owner
+      </dt>
+      <dd>
+        <%=@the_photo.owner.username%>
+      </dd>
+      <dt>
+        Posted
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_photo.created_at) %> ago
+      </dd>
+      <dt>
+        Likes count
+      </dt>
+      <dd>
+        <%= @the_photo.likes_count %>
+      </dd>
       <dt>
         Comments count
       </dt>
@@ -41,31 +64,16 @@
       </dd>
 
       <dt>
-        Likes count
+        Fans
       </dt>
       <dd>
-        <%= @the_photo.likes_count %>
+        <%= @fan_names.join(", ") %>
       </dd>
-
       <dt>
-        Owner
+        Add a fan
       </dt>
       <dd>
-        <%= @the_photo.owner_id %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_photo.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_photo.updated_at) %> ago
+        [[Like button]]
       </dd>
     </dl>
   </div>

@@ -6,9 +6,19 @@ class UserAuthenticationController < ApplicationController
     render({ :template => "user_authentication/sign_in.html.erb" })
   end
 
+  def show_liked_photos
+    @matching_user = params.fetch("username")
+    @the_user = User.where(:username => @matching_user).first
+    @liked_photos = Like.where(:fan_id => @the_user.id)
+
+    render({:template => "likes/index.html.erb"})
+  end
+
   def show
       the_name = params.fetch("username")
       @the_user = User.where( :username => the_name).first
+
+      @user_photos = @the_user.photo_list
 
       render({ :template => "user_authentication/show.html.erb"})
   end
