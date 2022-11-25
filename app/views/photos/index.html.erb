@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all photos
+      List of photos
     </h1>
   </div>
 </div>
@@ -68,15 +68,7 @@
     <table border="1">
       <tr>
         <th>
-          ID
-        </th>
-
-        <th>
           Caption
-        </th>
-
-        <th>
-          Comments count
         </th>
 
         <th>
@@ -84,7 +76,7 @@
         </th>
 
         <th>
-          Likes count
+          Likes
         </th>
 
         <th>
@@ -106,19 +98,11 @@
       <% @list_of_photos.each do |a_photo| %>
       <tr>
         <td>
-          <%= a_photo.id %>
+          <%= a_photo.image %>
         </td>
 
         <td>
           <%= a_photo.caption %>
-        </td>
-
-        <td>
-          <%= a_photo.comments_count %>
-        </td>
-
-        <td>
-          <%= a_photo.image %>
         </td>
 
         <td>

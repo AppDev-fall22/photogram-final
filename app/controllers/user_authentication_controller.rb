@@ -6,6 +6,13 @@ class UserAuthenticationController < ApplicationController
     render({ :template => "user_authentication/sign_in.html.erb" })
   end
 
+  def show
+      the_name = params.fetch("username")
+      @the_user = User.where( :username => the_name).first
+
+      render({ :template => "user_authentication/show.html.erb"})
+  end
+
   def create_cookie
     user = User.where({ :email => params.fetch("query_email") }).first
 
