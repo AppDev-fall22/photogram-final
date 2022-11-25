@@ -65,8 +65,8 @@ class UserAuthenticationController < ApplicationController
     matching_users = User.all
 
     @list_of_users = matching_users.order({ :username => :asc})
-    
-    if session[:user_id] != nil
+
+    if session[:user_id] == nil
       render({ :template => "user_authentication/user_list_regular.html.erb" })
     else
       render({ :template => "user_authentication/user_list_signin.html.erb" })

@@ -9,4 +9,6 @@
 #  photo_id   :integer
 #
 class Like < ApplicationRecord
+  belongs_to :user
+  belongs_to :photo
 end
