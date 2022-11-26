@@ -1,13 +1,47 @@
 <h1><%=@the_user.username%></h1>
 
+<%the_request = FollowRequest.where(:recipient_id => @the_user.id).where(:sender_id => session[:user_id]).first%>
+
 <dl>
   <dt>Private</dt>
     <dd><%=@the_user.private%></dd>
   <dt>Followers</dt>
     <dd><%=@followers.count%></dd>
-    <dd><a href="/">Follow/Unfollow</a>
+    <dd>
+      <%if the_request == nil and @the_user.id != session[:user_id]%>
+        <form action="/insert_follow_request" method = "post">
+          <input type="hidden" name="query_recipient_id" value="<%=@the_user.id%>">
+          <input type="hidden" name="query_sender_id" value="<%=session[:user_id]%>">
+          <input type="hidden" name="query_status" value="pending">
+          <button>Follow</button>
+        </form>
+      <%elsif @the_user.id != session[:user_id] and the_request.status == "accepted"%>
+        <a href="/delete_follow_request/<%=the_request.id%>">Unfollow</a>
+      <%end%>
+    </dd>
   <dt>Following</dt>
     <dd><%=@following.count%></dd>
+  
+  <%if @the_user.id == session[:user_id]%>
+    <dt>Edit user</dt>
+    <dd> 
+      <form action="/modify_user">
+        <label for="new_username">Username</label>
+        <input type="text" id="new_username" name="query_username" value="<%=@the_user.username%>">
+
+        <label for="f_private">Private?</label>
+        <input type="checkbox" id="f_private" name="query_private">
+
+        <input type="hidden" name="query_email" value="<%=@the_user.email%>">
+        <input type="hidden" name="query_password" value="<%=@the_user.password%>">
+        <input type="hidden" name="query_password_confirmation" value="<%=@the_user.password%>">
+        <input type="hidden" name="query_comments_count" value="<%=@the_user.comments_count%>">
+        <input type="hidden" name="query_likes_count" value="<%=@the_user.likes_count%>">
+
+        <button>Update user</button>
+      </form>
+    </dd>
+  <%end%>
 </dl>
 
 <ul>

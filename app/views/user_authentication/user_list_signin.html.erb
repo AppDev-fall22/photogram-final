@@ -18,7 +18,21 @@
           No
         <%end%>
       </td>
-      <td>Follow</td>
+      <td>
+        <%the_request = FollowRequest.where(:recipient_id => the_user.id).where(:sender_id => session[:user_id]).first%>
+        <%if the_request == nil%>
+          <form action="/insert_follow_request" method = "post">
+            <input type="hidden" name="query_recipient_id" value="<%=the_user.id%>">
+            <input type="hidden" name="query_sender_id" value="<%=session[:user_id]%>">
+            <input type="hidden" name="query_status" value="pending">
+            <button>Follow</button>
+          </form>
+        <%elsif the_request.status == "pending" or the_request.status=="rejected"%>
+          Request sent. <a href="/delete_follow_request/<%=the_request.id%>">Cancel</a>
+        <%else%>
+          <a href="/delete_follow_request/<%=the_request.id%>">Unfollow</a>
+        <%end%>
+      </td>
       <td><a href="/users/<%=the_user.username%>">Show details</a></td>
     </tr>
   <%end%>
