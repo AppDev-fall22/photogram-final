@@ -64,8 +64,8 @@
       </dt>
       <dd>
         <form action="/insert_like">
-          <input type="hidden" name="query_fan_id" value="<%session[:user_id]%>">
-          <input type="hidden" name="query_photo_id" value="<%@the_photo.id%>">
+          <input type="hidden" name="query_fan_id" value="<%=session[:user_id]%>">
+          <input type="hidden" name="query_photo_id" value="<%=@the_photo.id%>">
           <button>Like</button>
         </form>
       </dd>
