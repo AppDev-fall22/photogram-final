@@ -16,6 +16,8 @@ class PhotosController < ApplicationController
     fan_list = Like.where(:photo_id => the_id).map_relation_to_array(:fan_id)
     @fan_names = User.where({ :id => fan_list}).map_relation_to_array(:username)
 
+    @comments = Comment.where( :photo_id => the_id)
+
     render({ :template => "photos/show.html.erb" })
   end
 

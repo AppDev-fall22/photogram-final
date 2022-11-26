@@ -19,6 +19,8 @@ class UserAuthenticationController < ApplicationController
       @the_user = User.where( :username => the_name).first
 
       @user_photos = @the_user.photo_list
+      @followers = FollowRequest.where(:recipient_id => @the_user.id).where(:status => "accepted")
+      @following = FollowRequest.where(:sender_id => @the_user.id).where(:status => "accepted")
 
       render({ :template => "user_authentication/show.html.erb"})
   end

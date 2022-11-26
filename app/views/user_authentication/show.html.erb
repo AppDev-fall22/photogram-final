@@ -4,10 +4,10 @@
   <dt>Private</dt>
     <dd><%=@the_user.private%></dd>
   <dt>Followers</dt>
-    <dd>[[Follower count]]</dd>
+    <dd><%=@followers.count%></dd>
     <dd><a href="/">Follow/Unfollow</a>
   <dt>Following</dt>
-    <dd>[[Following count]]</dd>
+    <dd><%=@following.count%></dd>
 </dl>
 
 <ul>
@@ -42,7 +42,7 @@
       <td><img src="<%=the_photo.image%>"></img></td>
       <td><%=the_photo.owner.username%></td>
       <td><%=the_photo.caption%></td>
-      <td><%=time_ago_in_words(the_photo.created_at)%></td>
+      <td><%=time_ago_in_words(the_photo.updated_at)%></td>
       <td><%=the_photo.likes_count%></td>
       <td><a href="/photos/<%=the_photo.id%>">Show details</a>
     </tr>

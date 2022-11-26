@@ -12,9 +12,7 @@
       </div>
 
       <div>
-        <a href="/delete_photo/<%= @the_photo.id %>">
-          Delete photo
-        </a>
+        
       </div>
     </div>
 
@@ -23,7 +21,7 @@
         Image
       </dt>
       <dd>
-        <img src="<%=@the_photo.image%>"></img>
+        <img src="<%=@the_photo.image%>">
       </dd>
       <dt>
         Caption
@@ -73,67 +71,90 @@
         Add a fan
       </dt>
       <dd>
-        [[Like button]]
+        <form action="/insert_like">
+          <input type="hidden" name="query_fan_id" value="<%session[:user_id]%>">
+          <input type="hidden" name="query_photo_id" value="<%@the_photo.id%>">
+          <button>Like</button>
+        </form>
+      </dd>
+      <dt>
+        Delete photo
+      </dt>
+      <dd>
+        <a href="/delete_photo/<%= @the_photo.id %>">
+          Delete this photo
+        </a>
+      </dd>
+      <dt>
+        Edit photo
+      </dt>
+      <dd>
+        <form action="/modify_photo/<%= @the_photo.id %>"  method="post" enctype="multipart/form-data">
+          <div>
+            <input type="hidden" id="comments_count_box" name="query_comments_count" value="<%= @the_photo.comments_count %>">
+          </div>
+
+          
+            <label for="image_box">
+              Image URL
+            </label>
+
+            <input type="file" id="image_box" name="query_image" value="<%= @the_photo.image %>">
+          
+
+          
+            <label for="caption_box">
+              Caption
+            </label>
+
+            <textarea id="caption_box" name="query_caption"><%= @the_photo.caption %></textarea>
+          
+            <input type="hidden" id="likes_count_box" name="query_likes_count" value="<%= @the_photo.likes_count %>">
+          
+            <input type="hidden" id="owner_id_box" name="query_owner_id" value="<%= @the_photo.owner_id %>">
+
+          <button>
+            Update photo
+          </button>
+        </form>
       </dd>
     </dl>
   </div>
 </div>
 
-<hr>
+<h2>Comments</h2>
 
+<table>
+  <tr>
+    <th>Commenter</th>
+    <th>Comment</th>
+    <th>Posted</th>
+  </tr>
+  <tr>
+    <%@comments.each do |the_comment|%>
+      <td>
+        <%=the_comment.author.username%>
+      </td>
+      <td>
+        <%=the_comment.body%>
+      </td>
+      <td>
+        <%=time_ago_in_words(the_comment.updated_at)%> ago
+      </td>
+  </tr>
+  <%end%>
+</table>
 
-<div>
-  <div>
-    <h2>
-      Edit photo
-    </h2>
+<h3>Add new comment</h3>
 
-    <form action="/modify_photo/<%= @the_photo.id %>"  method="post" >
-      <div>
-        <label for="caption_box">
-          Caption
-        </label>
+<form action="/insert_comment" method="post">
+  <label for="new_comment">
+    Comment
+  </label>
+  <input type="hidden" id="new_author" name="query_author_id" value="<%=session[:user_id]%>">
+  <input type="hidden" id="current_photo" name="query_photo_id" value="<%=@the_photo.id%>">
 
-        <textarea id="caption_box" name="query_caption"><%= @the_photo.caption %></textarea>
-      </div>
+  <input type="text" id="new_comment" name="query_body" value="Enter a comment...">
 
-      <div>
-        <label for="comments_count_box">
-          Comments count
-        </label>
-
-        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @the_photo.comments_count %>">
-      </div>
-
-      <div>
-        <label for="image_box">
-          Image
-        </label>
-
-        <input type="text" id="image_box" name="query_image" value="<%= @the_photo.image %>">
-      </div>
-
-      <div>
-        <label for="likes_count_box">
-          Likes count
-        </label>
-
-        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @the_photo.likes_count %>">
-      </div>
-
-      <div>
-        <label for="owner_id_box">
-          Owner
-        </label>
-
-        <input type="text" id="owner_id_box" name="query_owner_id" value="<%= @the_photo.owner_id %>">
-      </div>
-
-      <button>
-        Update photo
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
+  <button>Add comment</button>
+</form>
