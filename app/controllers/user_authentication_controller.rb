@@ -22,7 +22,11 @@ class UserAuthenticationController < ApplicationController
       @followers = FollowRequest.where(:recipient_id => @the_user.id).where(:status => "accepted")
       @following = FollowRequest.where(:sender_id => @the_user.id).where(:status => "accepted")
 
-      render({ :template => "user_authentication/show.html.erb"})
+      if session[:user_id] != nil
+        render({ :template => "user_authentication/show.html.erb"})
+      else
+        redirect_to("/user_sign_in", { :alert => "You have to sign in first." })
+      end
   end
 
   def create_cookie

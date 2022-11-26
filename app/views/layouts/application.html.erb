@@ -32,7 +32,7 @@
         </li>
       <%else%>
         <li>
-          <a href="/edit_user_profile"><%= session[:user_id] %></a>
+          <a href="/edit_user_profile"><%= User.where(:id => session[:user_id]).first.username %></a>
         </li>
         <li>
           <a href="/user_sign_out">Sign out</a>

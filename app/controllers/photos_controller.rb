@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
   def index
-    public_users = User.where(:private => false)
+    public_users = User.where.not(:private => true)
     public_user_ids = public_users.map_relation_to_array(:id)
     matching_photos = Photo.where({ :owner_id => public_user_ids })
 
@@ -19,8 +19,12 @@ class PhotosController < ApplicationController
     @fan_names = User.where({ :id => fan_list}).map_relation_to_array(:username)
 
     @comments = Comment.where( :photo_id => the_id)
-
-    render({ :template => "photos/show.html.erb" })
+    
+    if session[:user_id] != nil
+      render({ :template => "photos/show.html.erb" })
+    else
+      redirect_to("/user_sign_in", { :alert => "You have to sign in first."})
+    end
   end
 
   def create

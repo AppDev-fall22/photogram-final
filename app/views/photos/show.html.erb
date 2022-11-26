@@ -63,7 +63,7 @@
         Add a fan
       </dt>
       <dd>
-        <form action="/insert_like">
+        <form action="/insert_like" method = "post">
           <input type="hidden" name="query_fan_id" value="<%=session[:user_id]%>">
           <input type="hidden" name="query_photo_id" value="<%=@the_photo.id%>">
           <button>Like</button>
