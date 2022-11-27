@@ -1,3 +1,4 @@
+<%the_like = Like.where(:fan_id => session[:user_id]).where(:photo_id => @the_photo.id).first%>
 <div>
   <div>
     <h1>
@@ -62,13 +63,19 @@
       <dt>
         Add a fan
       </dt>
-      <dd>
-        <form action="/insert_like" method = "post">
-          <input type="hidden" name="query_fan_id" value="<%=session[:user_id]%>">
-          <input type="hidden" name="query_photo_id" value="<%=@the_photo.id%>">
-          <button>Like</button>
-        </form>
-      </dd>
+      <%if the_like == nil%>
+        <dd>
+          <form action="/insert_like" method = "post">
+            <input type="hidden" name="query_fan_id" value="<%=session[:user_id]%>">
+            <input type="hidden" name="query_photo_id" value="<%=@the_photo.id%>">
+            <button>Like</button>
+          </form>
+        </dd>
+      <%else%>
+        <dd>
+          <a href="/delete_like/<%=the_like.id%>">Unlike</a>
+        </dd>
+      <%end%>
       <dt>
         Delete photo
       </dt>

@@ -23,11 +23,17 @@ class CommentsController < ApplicationController
     the_comment.body = params.fetch("query_body")
     the_comment.photo_id = params.fetch("query_photo_id")
 
+    the_photo = Photo.where(:id => the_comment.photo_id).first
+    orig_comment_count = the_photo.comments_count
+
     if the_comment.valid?
       the_comment.save
-      redirect_to("/comments", { :notice => "Comment created successfully." })
+      the_photo.comments_count = orig_comment_count + 1
+      the_photo.save
+
+      redirect_to("/photos/#{the_photo.id}", { :notice => "Comment created successfully." })
     else
-      redirect_to("/comments", { :alert => the_comment.errors.full_messages.to_sentence })
+      redirect_to("/photos/#{the_photo.id}", { :alert => the_comment.errors.full_messages.to_sentence })
     end
   end
 
