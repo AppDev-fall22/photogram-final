@@ -18,6 +18,34 @@
       <%elsif @the_user.id != session[:user_id] and the_request.status == "accepted"%>
         <a href="/delete_follow_request/<%=the_request.id%>">Unfollow</a>
       <%end%>
+
+      <%if @the_user.id == session[:user_id]%>
+        <%pending_requests = FollowRequest.where(:recipient_id => session[:user_id]).where(:status => "pending")%>
+        <dd>
+          <strong>Pending follow requests</strong>
+          <ul>
+            <%if pending_requests.count > 0%>
+              <%pending_requests.each do |the_pending|%>
+                <li>
+                  <%=the_pending.sender.username%>
+                  <form action="/modify_follow_request/<%=the_pending.id%>">
+                    <input type="hidden" name="query_recipient_id" value="<%=session[:user_id]%>">
+                    <input type="hidden" name="query_sender_id" value="<%=the_pending.sender_id%>">
+                    <input type="hidden" name="query_status" value="accepted">
+                    <button>accept</button>
+                  </form>
+                  <form>
+                    <input type="hidden" name="query_recipient_id" value="<%=session[:user_id]%>">
+                    <input type="hidden" name="query_sender_id" value="<%=the_pending.sender_id%>">
+                    <input type="hidden" name="query_status" value="rejected">
+                    <button>reject</button>
+                  </form>
+                </li>
+              <%end%>
+            <%end%>
+          </ul>
+        </dd>
+      <%end%>
     </dd>
   <dt>Following</dt>
     <dd><%=@following.count%></dd>
