@@ -27,7 +27,8 @@
 
         <textarea id="caption_box" name="query_caption" rows="3"></textarea>
 
-        <input type="hidden" id="likes_count_box" name="query_likes_count">
+        <input type="hidden" id="likes_count_box" name="query_likes_count" value="0">
+        <input type="hidden" id="comments_count_box" name="query_comments_count" value="0">
         <input type="hidden" id="owner_id_box" name="query_owner_id" value="<%=session[:user_id]%>">
 
       <button>

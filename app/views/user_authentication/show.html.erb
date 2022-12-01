@@ -104,7 +104,7 @@
       <td><img src="<%=the_photo.image%>"></img></td>
       <td><%=the_photo.owner.username%></td>
       <td><%=the_photo.caption%></td>
-      <td><%=time_ago_in_words(the_photo.updated_at)%> ago</td>
+      <td><%=time_ago_in_words(the_photo.created_at)%> ago</td>
       <td><%=the_photo.likes_count%></td>
       <td><a href="/photos/<%=the_photo.id%>">Show details</a>
     </tr>
